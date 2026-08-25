@@ -19,15 +19,30 @@ namespace Workshop.Student
         };
 
         // 1. declare Players variable
-
+        public GameObject[] Players;
         // 7. declare Exit variable 
-
+        public GameObject Exit;
 
         public void Start()
         {
             // 1. random player at the position <0, 0> map
-
+            int p = UnityEngine.Random.Range(0, Players.Length);
+            Instantiate(Players[p], new Vector2(0, 0), Quaternion.identity);
             // 2. create obstacles
+            int wallx = 5;
+
+            for (int y = -1; y <= 4; y++)
+            {
+                int r = UnityEngine.Random.Range(0, wallTiles.Length);
+                GameObject wall = Instantiate(wallTiles[r], new Vector2(wallx, y), Quaternion.identity);
+                wall.name = $"{wallx} - {y}";
+
+                SpriteRenderer sr = wall.GetComponent<SpriteRenderer>();
+                if (sr != null)
+                {
+                    sr.sortingOrder = 5;
+                }
+            }
 
             // 3. create floor
             //int x = 1;
@@ -89,6 +104,7 @@ namespace Workshop.Student
                 }
             }
             // 7. place exit
+            Instantiate(Exit, new Vector2(columns - 1, rows - 1), Quaternion.identity);
 
         }
     }
